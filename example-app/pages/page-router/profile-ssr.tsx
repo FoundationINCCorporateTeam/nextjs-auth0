@@ -13,10 +13,10 @@ export default function Profile({ user }: InferGetServerSidePropsType<typeof get
 }
 
 export const getServerSideProps = withPageAuthRequired({
-  async getServerSideProps(ctx) {
+  getServerSideProps: async (ctx) => {
     return {
       props: {
-        user: ctx.user || null,
+        user: ctx?.user ?? null,
       },
     };
   },
