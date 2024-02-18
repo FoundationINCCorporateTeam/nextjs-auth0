@@ -1,6 +1,6 @@
 import React from 'react';
 import { InferGetServerSidePropsType } from 'next';
-import { pageRouterAuth } from '../../lib/auth0';
+import { withPageAuthRequired } from '@auth0/nextjs-auth0';
 import Layout from '@/components/layout';
 
 export default function Profile({ user }: InferGetServerSidePropsType<typeof getServerSideProps>): React.ReactElement {
@@ -12,4 +12,12 @@ export default function Profile({ user }: InferGetServerSidePropsType<typeof get
   );
 }
 
-export const getServerSideProps = pageRouterAuth.withPageAuthRequired();
+export const getServerSideProps = withPageAuthRequired({
+  async getServerSideProps(ctx) {
+    return {
+      props: {
+        user: ctx.user || null,
+      },
+    };
+  },
+});
